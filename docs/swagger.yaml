@@ -35,7 +35,7 @@ definitions:
     required:
     - id
     type: object
-  model.User:
+  models.User:
     properties:
       email:
         description: Email address
@@ -69,7 +69,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.User'
+              $ref: '#/definitions/models.User'
             type: array
       summary: Get all users
       tags:
@@ -124,7 +124,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.User'
+            $ref: '#/definitions/models.User'
       summary: Find user by ID
       tags:
       - users

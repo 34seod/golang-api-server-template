@@ -1,17 +1,17 @@
 package factories
 
 import (
-	"golang-api-server-template/internal/model"
+	"golang-api-server-template/internal/models"
 	"golang-api-server-template/test/testutils"
 	// "golang.org/x/crypto/bcrypt"
 )
 
 // CreateUserFactory generates a user and saves it to the test database
 // Email: random, Password: "password"
-func UserFactory() model.User {
+func UserFactory() models.User {
 	// hashedPassword, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
 	email := testutils.GenerateRandomString(5) + "@example.com"
-	user := model.User{
+	user := models.User{
 		Name:  testutils.GenerateRandomString(10),
 		Tel:   testutils.GenerateRandomStringPtr(11),
 		Email: &email,
@@ -23,8 +23,8 @@ func UserFactory() model.User {
 	return user
 }
 
-func UsersFactory(count int) []model.User {
-	var users []model.User
+func UsersFactory(count int) []models.User {
+	var users []models.User
 
 	for range count {
 		users = append(users, UserFactory())

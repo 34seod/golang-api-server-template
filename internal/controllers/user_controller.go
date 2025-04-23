@@ -1,4 +1,4 @@
-package controller
+package controllers
 
 import (
 	"fmt"
@@ -8,8 +8,8 @@ import (
 	"github.com/jinzhu/copier"
 
 	"golang-api-server-template/internal/dto"
-	"golang-api-server-template/internal/model"
-	"golang-api-server-template/internal/service"
+	"golang-api-server-template/internal/models"
+	"golang-api-server-template/internal/services"
 	"golang-api-server-template/tools"
 )
 
@@ -18,7 +18,7 @@ import (
 // @Tags			users
 // @Param			id	path	int	true	"User ID"
 // @Produce		json
-// @Success		200	{object}	model.User
+// @Success		200	{object}	models.User
 // @Router			/v1/users/{id} [get]
 func UserFindByID(c *gin.Context) {
 	status := http.StatusOK
@@ -30,7 +30,7 @@ func UserFindByID(c *gin.Context) {
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
 	}
 
-	user, err := service.UserFindByID(&userDto)
+	user, err := services.UserFindByID(&userDto)
 	if err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
@@ -43,13 +43,13 @@ func UserFindByID(c *gin.Context) {
 // @Description	List all users
 // @Tags			users
 // @Produce		json
-// @Success		200	{array}	model.User
+// @Success		200	{array}	models.User
 // @Router			/v1/users [get]
 func UserFindAll(c *gin.Context) {
 	status := http.StatusOK
 	var errMsg any = nil
 
-	users, err := service.UserFindAll()
+	users, err := services.UserFindAll()
 	if err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
@@ -78,14 +78,14 @@ func UserCreate(c *gin.Context) {
 	fmt.Println("userDto.Name")
 	fmt.Println(userDto.Name)
 
-	user := model.User{}
+	user := models.User{}
 	copier.Copy(&user, &userDto)
 	if err := user.Validate(); err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err, validateErrors(err))
 	}
 
-	if err := service.UserCreate(&user); err != nil {
+	if err := services.UserCreate(&user); err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
 	}
@@ -105,8 +105,8 @@ func UserCreate(c *gin.Context) {
 func UserUpdate(c *gin.Context) {
 	status := http.StatusNoContent
 	var errMsg any = nil
-
 	var userDto dto.UserBodyFromUpdateRequest
+
 	if err := c.ShouldBindUri(&userDto); err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
@@ -115,14 +115,14 @@ func UserUpdate(c *gin.Context) {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
 	}
-	user := model.User{}
+	user := models.User{}
 	copier.Copy(&user, &userDto)
 	if err := user.Validate(); err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err, validateErrors(err))
 	}
 
-	err := service.UserUpdate(&userDto)
+	err := services.UserUpdate(&userDto)
 	if err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
@@ -148,7 +148,7 @@ func UserDelete(c *gin.Context) {
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)
 	}
 
-	err := service.UserDelete(&userDto)
+	err := services.UserDelete(&userDto)
 	if err != nil {
 		tools.PrintTrace()
 		status, errMsg = errorCtrl(http.StatusBadRequest, err)

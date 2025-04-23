@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"golang-api-server-template/internal/controller"
+	"golang-api-server-template/internal/controllers"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -16,10 +16,10 @@ func SetRoutes(r *gin.Engine) {
 	// v1
 	{
 		v1 := r.Group("/v1")
-		v1.GET("/users", controller.UserFindAll)
-		v1.GET("/users/:id", controller.UserFindByID)
-		v1.POST("/users", controller.UserCreate)
-		v1.PUT("/users/:id", controller.UserUpdate)
-		v1.DELETE("/users/:id", controller.UserDelete)
+		v1.GET("/users", controllers.UserFindAll)
+		v1.GET("/users/:id", controllers.UserFindByID)
+		v1.POST("/users", controllers.UserCreate)
+		v1.PUT("/users/:id", controllers.UserUpdate)
+		v1.DELETE("/users/:id", controllers.UserDelete)
 	}
 }

@@ -1,4 +1,4 @@
-package controller
+package controllers
 
 import (
 	"errors"
@@ -13,8 +13,8 @@ import (
 
 // =================================================================
 type APIResponse struct {
-	Data  any `json:"data"`
-	Error any `json:"error"`
+	Data  any `json:"data"`  // data
+	Error any `json:"error"` // error
 }
 
 func response(c *gin.Context, statusCode int, data any, err any) {

@@ -1,9 +1,9 @@
-package repository
+package repositories
 
 import (
 	. "golang-api-server-template/configs"
 	"golang-api-server-template/internal/dto"
-	"golang-api-server-template/internal/model"
+	model "golang-api-server-template/internal/models"
 	"golang-api-server-template/tools"
 )
 

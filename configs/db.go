@@ -31,11 +31,18 @@ func ConnectTestDB() {
 
 func connect(dsn string) {
 	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
+		Logger: logger.Default.LogMode(logMod()),
 	})
 	if err != nil {
 		panic("fail to connect DB")
 	}
 
 	DB = database
+}
+
+func logMod() logger.LogLevel {
+	if Get().Env == "production" {
+		return logger.Silent
+	}
+	return logger.Info
 }

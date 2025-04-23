@@ -3,7 +3,7 @@ package testutils
 import (
 	"fmt"
 	"golang-api-server-template/configs"
-	"golang-api-server-template/internal/model"
+	"golang-api-server-template/internal/models"
 	"log"
 
 	"gorm.io/gorm"
@@ -33,7 +33,7 @@ func SetupTestDatabase() {
 	TestDB.Exec("USE test")
 
 	// Run migrations (you can add your models here)
-	TestDB.AutoMigrate(&model.User{})
+	TestDB.AutoMigrate(&models.User{})
 }
 
 func ResetTestData() {

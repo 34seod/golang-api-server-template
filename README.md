@@ -1,20 +1,52 @@
+# CMD
+
+## server start
+
+```bash
+docker compose up -d
+```
+
+## test
+
+```bash
+# 도커 시작
+docker compose up -d
+# 테스트 시작
+go test ./test -coverpkg=./internal/... -coverprofile=./tmp/coverage.out
+# 결과를 브라우저에서 확인
+go tool cover -html=./tmp/coverage.out
+```
+
+## swagger 생성
+
+```bash
+swag init -g main.go
+```
+
 # Dependencies
 
 - GIN
 - GORM
-- VIPER
+- swagger
+- dlv
 
 # 폴더구조
 
 - docs : swagger
 - internal : 소스코드
+  - controller :
+  - dto : request의 값을 가져오기 위한 구조체
+  - model : db테이블 구조체 및 비지니스로직 구현
+  - repository : DB접속
+  - service : repository와 model을 이용해 기능 구현
+  - routes : 모든 route를 정의
 - tools : 공통적으로 사용되는 함수
 - scripts : 빌드, 테스트 등 을 위한 스크립트
 - test : API를 호출하여 테스트
 
 # API 구조도
 
-![img](./architecture.png)
+![img](./docs/architecture.png)
 
 # Rule
 
@@ -40,35 +72,7 @@
    - GORM 태그 설정
    - 비지니스 로직 구현
 
-# test
-
-```bash
-docker compose up -d
-go test ./test -coverpkg=./internal/... -coverprofile=./tmp/coverage.out
-go tool cover -html=./tmp/coverage.out
-```
-
-# swagger 생성
-
-```bash
-swag init -g main.go
-```
-
 # TODO
 
-~~1. 전체구조 구성~~
-
-~~1. gin~~
-
-~~1. docker compose~~
-
-~~1. debug~~
-
-~~1. gorm~~
-
-~~1. test: test용 db~~
-
-1. swagger: 구성하는 방법
-1. md 정리
-1. db 로그 모드 환경설정으로 컨트롤
 1. response함수 리펙토링
+1. transaction

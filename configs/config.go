@@ -10,6 +10,7 @@ type Config struct {
 	DBPort     string
 	ServerHost string
 	ServerPort string
+	Env        string
 }
 
 var cnf *Config
@@ -31,6 +32,7 @@ func loadConfig() *Config {
 	cnf.DBPort = getEnv("DB_PORT", "3306")
 	cnf.ServerHost = getEnv("SERVER_HOST", "localhost")
 	cnf.ServerPort = getEnv("SERVER_PORT", "8080")
+	cnf.Env = getEnv("ENV", "develop")
 	return cnf
 }
 

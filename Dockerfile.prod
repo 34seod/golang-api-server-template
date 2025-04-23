@@ -4,6 +4,6 @@ WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=0 go build -tags=jsoniter -o ./server ./main.go
 
-FROM scratch
+FROM alpine
 COPY --from=build /app/server ./server
 CMD [ "./server" ]
