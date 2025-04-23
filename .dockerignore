@@ -1,0 +1,12 @@
+docker-compose.yml
+Dockerfile
+Dockerfile.prod
+README.md
+architecture.png
+.gitignore
+.dockerignore
+scripts
+api
+.vscode
+.DS_Store
+db

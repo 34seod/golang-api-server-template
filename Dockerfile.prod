@@ -1,0 +1,9 @@
+FROM golang:1.24-alpine AS build
+
+WORKDIR /app
+COPY . .
+RUN CGO_ENABLED=0 go build -tags=jsoniter -o ./server ./main.go
+
+FROM scratch
+COPY --from=build /app/server ./server
+CMD [ "./server" ]

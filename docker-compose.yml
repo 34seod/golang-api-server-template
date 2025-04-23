@@ -1,0 +1,40 @@
+services:
+  db:
+    container_name: db
+    image: mariadb:lts
+    restart: unless-stopped
+    volumes:
+      - golang-api-server-template-db:/var/lib/mysql
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - TZ="Asia/Tokyo"
+      - ALLOW_EMPTY_PASSWORD=no
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 3306:${DB_PORT}
+  web:
+    build: .
+    restart: always
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - SERVER_HOST=${SERVER_HOST}
+      - SERVER_PORT=${SERVER_PORT}
+      - GIN_MODE=${GIN_MODE}
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    ports:
+      - 8080:${SERVER_PORT}
+      - 2345:2345
+
+volumes:
+  golang-api-server-template-db:

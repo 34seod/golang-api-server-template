@@ -1,0 +1,155 @@
+definitions:
+  dto.UserBodyFromCreateRequest:
+    properties:
+      email:
+        description: Email address
+        example: john@example.com
+        type: string
+      name:
+        description: User name
+        example: John Doe
+        type: string
+      tel:
+        description: Phone number
+        example: "01012345678"
+        type: string
+    type: object
+  dto.UserBodyFromUpdateRequest:
+    properties:
+      email:
+        description: Email address
+        example: john@example.com
+        type: string
+      id:
+        description: User ID from path
+        example: 1
+        type: integer
+      name:
+        description: User name
+        example: John Doe
+        type: string
+      tel:
+        description: Phone number
+        example: "01012345678"
+        type: string
+    required:
+    - id
+    type: object
+  model.User:
+    properties:
+      email:
+        description: Email address
+        example: john@example.com
+        type: string
+      id:
+        description: User ID
+        example: 1
+        type: integer
+      name:
+        description: User name
+        example: John Doe
+        type: string
+      tel:
+        description: Phone number
+        example: "01012345678"
+        type: string
+    required:
+    - name
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/users:
+    get:
+      description: List all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserBodyFromCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Create user
+      tags:
+      - users
+  /v1/users/{id}:
+    delete:
+      description: Delete a user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete user
+      tags:
+      - users
+    get:
+      description: Get a single user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+      summary: Find user by ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update a user's info
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserBodyFromUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Update user
+      tags:
+      - users
+swagger: "2.0"
